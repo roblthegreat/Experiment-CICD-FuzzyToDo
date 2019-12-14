@@ -1,5 +1,5 @@
 # FuzzyToDo
-![](https://github.com/roblthegreat/FuzzyToDo/blob/master/.github/workflows/dotnetcore.yml/badge.svg)
+![](https://github.com/roblthegreat/FuzzyToDo/workflows/.github/workflows/dotnetcore.yml/badge.svg)
 
  Simple CrossPlatform ToDo App with Avalonia UI
 
