@@ -37,4 +37,4 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: FuzzyToDo_winx64
-        path: FuzzyToDo/bin/Release/netcoreapp3.1/win10-x64/publish
+        path: FuzzyToDo/bin/Release/netcoreapp3.1/win-x64/publish
