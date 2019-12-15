@@ -9,19 +9,24 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.100
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v2 
+      with:
+        token: ${{secrets.github_token}} 
     - name: Build linux-x64
       run: dotnet publish -r linux-x64 -c Release -f netcoreapp3.1 /p:PublishTrimmed=true
     - name: Archive publish linux-x64 artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: FuzzyToDo_linux-x64
+        name: FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-x64
         path: FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish
     - name: Build linux-arm
       run: dotnet publish -r linux-arm -c Release -f netcoreapp3.1 /p:PublishTrimmed=true
     - name: Archive publish linux-arm artifacts
       uses: actions/upload-artifact@v1
       with:
-        name: FuzzyToDo_linux-arm
+        name: FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-arm
         path: FuzzyToDo/bin/Release/netcoreapp3.1/linux-arm/publish
   publishwin:
     runs-on: windows-latest
