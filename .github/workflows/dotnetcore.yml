@@ -10,14 +10,14 @@ jobs:
       with:
         dotnet-version: 3.1.100
     - name: Build linux-x64
-      run: dotnet publish -r linux-x64 -c Release -f netcoreapp3.1 /p:PublishTrimmed=true /p:PublishSingleFile=true  
+      run: dotnet publish -r linux-x64 -c Release -f netcoreapp3.1 /p:PublishTrimmed=true
     - name: Archive publish linux-x64 artifacts
       uses: actions/upload-artifact@v1
       with:
         name: FuzzyToDo_linux-x64
         path: FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish
     - name: Build linux-arm
-      run: dotnet publish -r linux-arm -c Release -f netcoreapp3.1 /p:PublishTrimmed=true /p:PublishSingleFile=true  
+      run: dotnet publish -r linux-arm -c Release -f netcoreapp3.1 /p:PublishTrimmed=true
     - name: Archive publish linux-arm artifacts
       uses: actions/upload-artifact@v1
       with:
@@ -32,7 +32,7 @@ jobs:
       with:
         dotnet-version: 3.1.100
     - name: Publish with dotnet
-      run: dotnet publish -r win-x64 -c Release -f netcoreapp3.1 /p:PublishTrimmed=true /p:PublishingSingleFile=true
+      run: dotnet publish -r win-x64 -c Release -f netcoreapp3.1 /p:PublishTrimmed=true
     - name: Archive publish artifacts
       uses: actions/upload-artifact@v1
       with:
