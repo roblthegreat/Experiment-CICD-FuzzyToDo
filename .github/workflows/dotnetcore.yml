@@ -25,7 +25,5 @@ jobs:
         export container_name=builds
         export blob_name=FuzzyToDo-${{steps.buildnumber.outputs.build_number}}_linux-x64.zip
         export file_to_upload=FuzzyToDo-${{steps.buildnumber.outputs.build_number}}_linux-x64.zip
-        echo "Creating the container..."
-        az storage container create --name $container_name
         echo "Uploading the file..."
         az storage blob upload --container-name $container_name --file $file_to_upload --name $blob_name  
