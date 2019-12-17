@@ -16,15 +16,29 @@ jobs:
         token: ${{secrets.github_token}} 
     - name: Build linux-x64
       run: dotnet publish -r linux-x64 -c Release -f netcoreapp3.1 --self-contained=true 
-    - name: Zip
-      run: zip FuzzyToDo-linux-x64 FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish/*.*
-    - name: Azure
+    - name: Zip linux-x64 build
+      run: zip FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-x64 FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish/*.*
+    - name: Upload to Azure
       run: |
         ls -l
         export AZURE_STORAGE_ACCOUNT=githubbuilds
         export AZURE_STORAGE_KEY=${{secrets.storage_key}}
         export container_name=builds
-        export blob_name=FuzzyToDo-linux-x64.zip
-        export file_to_upload=FuzzyToDo-linux-x64.zip
+        export blob_name=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-x64.zip
+        export file_to_upload=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-x64.zip
+        echo "Uploading the file..."
+        az storage blob upload --container-name $container_name --file $file_to_upload --name $blob_name  
+    - name: Build linux-arm
+      run: dotnet publish -r linux-arm -c Release -f netcoreapp3.1 --self-contained=true 
+    - name: Zip linux-arm build
+      run: zip FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-arm FuzzyToDo/bin/Release/netcoreapp3.1/linux-arm/publish/*.*
+    - name: Upload to Azure
+      run: |
+        ls -l
+        export AZURE_STORAGE_ACCOUNT=githubbuilds
+        export AZURE_STORAGE_KEY=${{secrets.storage_key}}
+        export container_name=builds
+        export blob_name=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-arm.zip
+        export file_to_upload=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-arm.zip
         echo "Uploading the file..."
         az storage blob upload --container-name $container_name --file $file_to_upload --name $blob_name  
