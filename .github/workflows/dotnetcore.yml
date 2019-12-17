@@ -20,8 +20,8 @@ jobs:
       run: zip FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_linux-x64  FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish
     - name: Azure
       uses: bacongobbler/azure-blob-storage-upload@v1.0.0
-        with:
-          source_dir: .
-          container_name: www
-          connection_string: ${{ secrets.BlobConnectionString }}
-          extra_args: '--pattern *.zip'  
+      with:
+        source_dir: .
+        container_name: www
+        connection_string: ${{ secrets.BlobConnectionString }}
+        extra_args: '--pattern *.zip'  
