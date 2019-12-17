@@ -20,6 +20,7 @@ jobs:
       run: zip FuzzyToDo-${{steps.buildnumber.outputs.build_number}}_linux-x64  FuzzyToDo/bin/Release/netcoreapp3.1/linux-x64/publish
     - name: Azure
       run: |
+        ls -l
         export AZURE_STORAGE_ACCOUNT=githubbuilds
         export AZURE_STORAGE_KEY=${{secrets.storage_key}}
         export container_name=builds
