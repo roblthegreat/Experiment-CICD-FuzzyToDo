@@ -12,23 +12,18 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.100
-    - name: Generate build number
-      id: buildnumber
-      uses: einaregilsson/build-number@v2 
-      with:
-        token: ${{secrets.github_token}} 
     - name: Build ${{ matrix.platform }}
       run: dotnet publish -r ${{ matrix.platform }} -c Release -f netcoreapp3.1 --self-contained=true 
     - name: Zip ${{ matrix.platform }} build
-      run: zip FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_${{ matrix.platform }} FuzzyToDo/bin/Release/netcoreapp3.1/${{ matrix.platform }}/publish/*.*
+      run: zip -j FuzzyToDo-$(date +"%Y%d%m")_${{ matrix.platform }} FuzzyToDo/bin/Release/netcoreapp3.1/${{ matrix.platform }}/publish/*.*
     - name: Upload ${{ matrix.platform }} to Azure
       run: |
         ls -l
         export AZURE_STORAGE_ACCOUNT=githubbuilds
         export AZURE_STORAGE_KEY=${{secrets.storage_key}}
         export container_name=builds
-        export blob_name=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_${{ matrix.platform }}.zip
-        export file_to_upload=FuzzyToDo-${{ steps.buildnumber.outputs.build_number }}_${{ matrix.platform }}.zip
+        export blob_name=FuzzyToDo-$(date +"%Y%d%m")_${{ matrix.platform }}.zip
+        export file_to_upload=FuzzyToDo-$(date +"%Y%d%m")_${{ matrix.platform }}.zip
         echo "Uploading the file..."
         az storage blob upload --container-name $container_name --file $file_to_upload --name $blob_name  
     
